@@ -10,6 +10,8 @@ regress:
 	@echo SKIPPED
 .endif
 
+.MAIN: all
+
 .if make (regress) || make (all)
 .BEGIN:
 	@echo
