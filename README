@@ -1,0 +1,21 @@
+Test adding and deleting addreses on a network interface.  Especially
+check the cloning, cloned, local, broadcast routes.  Also use aliases
+with unusual netmasks.
+
+SUDO has to be set to sudo or doas if the test is started by a
+non-root user.
+
+FAKE_ETHER must contain a pseudo ether device that can be created
+and destroyed on the system.
+
+FAKE_PREFIX must be a /24 IPv4 prefix that does not exist on the
+system.  Addresses and routes in this range are added and deleted.
+
+EXAMPLE
+
+- My environment when executing the test
+
+FAKE_ETHER=vether188
+FAKE_PREFIX=10.188.70
+
+export FAKE_ETHER FAKE_PREFIX
