@@ -16,6 +16,6 @@ EXAMPLE
 - My environment when executing the test
 
 FAKE_ETHER=vether188
-FAKE_PREFIX=10.188.70
+FAKE_PREFIX=10.188.210
 
 export FAKE_ETHER FAKE_PREFIX
