@@ -130,18 +130,19 @@ run-regress-alias-panic: clean-if
 	@echo '\n======== $@ ========'
 	${SUDO} ifconfig ${IF} create
 	${SUDO} ifconfig ${IF} inet ${NET}.1/24
-	-ping -c 1 -w 1 ${NET}.2
+	! ping -c 1 -w 1 ${NET}.2
+	netstat -rn | grep -F '${NET}'
+	route -n get -inet -host ${NET}.2 | grep -qF 'mask: 255.255.255.255'
+	route -n get -inet -host ${NET}.2 | grep -qF 'interface: ${IF}'
+	route -n get -inet -host ${NET}.2 | grep -qF 'if address: ${NET}.1'
+	route -n get -inet -host ${NET}.2 |\
+	    grep -qF 'flags: <UP,HOST,DONE,LLINFO,CLONED>'
 	${SUDO} ifconfig ${IF} inet ${NET}.2/24 alias
 	ifconfig ${IF} | grep -F inet
 	ifconfig ${IF} | grep -qF 'inet ${NET}.1 netmask 0xffffff00 '
 	ifconfig ${IF} | grep -qF 'inet ${NET}.2 netmask 0xffffff00 '
 	netstat -rn | grep -F '${NET}'
-	-${SUDO} route -n delete -host ${NET}.2
-	route -n get -inet -host ${NET}.2 | grep -qF 'mask: 255.255.255.255'
-	route -n get -inet -host ${NET}.2 | grep -qF 'interface: ${IF}'
-	route -n get -inet -host ${NET}.2 | grep -qF 'if address: ${NET}.2'
-	route -n get -inet -host ${NET}.2 |\
-	    grep -qF 'flags: <UP,HOST,DONE,LLINFO,LOCAL>'
+	-! ${SUDO} route -n delete -host ${NET}.2
 	-ping -c 1 -w 1 ${NET}.2
 	route -n get -inet -host ${NET}.2 | grep -qF 'mask: 255.255.255.255'
 	route -n get -inet -host ${NET}.2 | grep -qF 'interface: ${IF}'
