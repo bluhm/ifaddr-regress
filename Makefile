@@ -83,11 +83,6 @@ run-regress-alias32: clean-if
 	route -n get -inet -host ${NET}.255 | grep -qF 'if address: ${NET}.1'
 	route -n get -inet -host ${NET}.255 |\
 	    grep -qF 'flags: <UP,HOST,DONE,BROADCAST>'
-	#route -n get -inet -net ${NET}.2/32 | grep -qF 'mask: 255.255.255.255'
-	#route -n get -inet -net ${NET}.2/32 | grep -qF 'interface: ${IF}'
-	#route -n get -inet -net ${NET}.2/32 | grep -qF 'if address: ${NET}.2'
-	#route -n get -inet -net ${NET}.2/32 |\
-	    grep -qF 'flags: <UP,DONE,CLONING,CONNECTED>'
 	route -n get -inet -host ${NET}.2 | grep -qF 'mask: 255.255.255.255'
 	route -n get -inet -host ${NET}.2 | grep -qF 'interface: ${IF}'
 	route -n get -inet -host ${NET}.2 | grep -qF 'if address: ${NET}.2'
